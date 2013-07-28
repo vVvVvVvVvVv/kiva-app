@@ -1,0 +1,22 @@
+//Create a view that joins all the tables we want
+CREATE VIEW loanInfo AS
+SELECT activities.activity AS activity, basket_amount, borrower_count, funded_amount, loans.id AS id, 
+images.id AS image_id, images.template_id AS image_template_id, loan_amount, countries.country AS country, 
+countries.country_code AS country_code, towns.town AS town, name, partner_id, planned_expiration_date, 
+posted_date, sectors.sector, statuses.status AS status, use_text AS 'use'
+FROM loans INNER JOIN images on (loans.image_id = images.id)
+INNER JOIN activities on (loans.activity_id = activities.id)
+INNER JOIN sectors on (loans.sector_id = sectors.id)
+INNER JOIN statuses on (loans.status_id = statuses.id)
+INNER JOIN locations on (loans.location_id = locations.id)
+INNER JOIN countries on (locations.country_id = countries.id)
+INNER JOIN towns on (locations.town_id = towns.id)
+ORDER BY posted_date DESC;
+
+//Main query
+SELECT * from loanInfo;
+
+//Need to pull lanuages seperately since there could be many of them for each loan
+SELECT language from languages 
+INNER JOIN loanLanguages on (languages.id = loanLanguages.language_id)
+WHERE loanLanguages.loan_id IN (select id from loanInfo);

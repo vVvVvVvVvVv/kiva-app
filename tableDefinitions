@@ -1,0 +1,88 @@
+CREATE TABLE loans
+(
+id INT NOT NULL,
+activity_id INT,
+basket_amount INT,
+borrower_count INT,
+funded_amount INT,
+image_id INT,
+loan_amount INT,
+location_id INT,
+name VARCHAR(255),
+partner_id INT,
+planned_expiration_date DATETIME,
+posted_date DATETIME,
+sector_id INT,
+status_id INT,
+use_text VARCHAR(255),
+PRIMARY KEY (id),
+FOREIGN KEY (activity_id) REFERENCES activities(id),
+FOREIGN KEY (image_id) REFERENCES images(id),
+FOREIGN KEY (location_id) REFERENCES locations(id),
+FOREIGN KEY (sector_id) REFERENCES sectors(id),
+FOREIGN KEY (status_id) REFERENCES statuses(id)
+);
+
+//Since activites, sectors and statuses often repeat we can store them in thier own tables and just reference the id
+CREATE TABLE activities (
+id INT NOT NULL AUTO_INCREMENT,
+activity VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE sectors (
+id INT NOT NULL AUTO_INCREMENT,
+sector VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE statuses (
+id INT NOT NULL AUTO_INCREMENT,
+status VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE images (
+id INT NOT NULL,
+template_id INT,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE locations
+(
+id INT NOT NULL AUTO_INCREMENT,
+country_id INT,
+town_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (country_id) REFERENCES countries(id),
+FOREIGN KEY (town_id) REFERENCES towns(id)
+);
+
+CREATE TABLE countries (
+id INT NOT NULL AUTO_INCREMENT,
+country VARCHAR(255),
+country_code VARCHAR(2),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE towns (
+id INT NOT NULL AUTO_INCREMENT,
+town VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+//Since there can be many langauges for one loan we need a seperate table to hold that info
+CREATE TABLE loanLanguages (
+id INT NOT NULL AUTO_INCREMENT,
+loan_id INT,
+language_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (loan_id) REFERENCES loans(id),
+FOREIGN KEY (language_id) REFERENCES languages(id)
+);
+
+CREATE TABLE languages (
+id INT NOT NULL AUTO_INCREMENT,
+language VARCHAR(2),
+PRIMARY KEY (id)
+);
