@@ -40,7 +40,9 @@ $(document).ready(function(){
 	          { "sTitle": "Expiration Date"},
 	          { "sTitle": "Posted Date"},
 	          { "sTitle": "Use"},
-		    ]
+		    ],
+		    "bJQueryUI": true,
+		    "sPaginationType": "full_numbers",
 	     }, "json");
 	});
 });
