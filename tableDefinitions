@@ -83,7 +83,7 @@ FOREIGN KEY (language_id) REFERENCES languages(id)
 
 CREATE TABLE languages (
 id INT NOT NULL AUTO_INCREMENT,
-language VARCHAR(2),
+language VARCHAR(255),
 PRIMARY KEY (id)
 );
 
@@ -95,6 +95,8 @@ activity VARCHAR(255),
 basket_amount INT,
 borrower_count INT,
 funded_amount INT,
+image_id INT,
+image_template_id INT,
 loan_amount INT,
 name VARCHAR(255),
 partner_id INT,

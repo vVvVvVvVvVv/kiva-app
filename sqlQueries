@@ -24,10 +24,15 @@ WHERE loanLanguages.loan_id IN (select id from loanInfo);
 //Simplified loans schema to make stubbing the api easier
 //New view using simplier loan schema
 CREATE VIEW loanInfo AS
-SELECT activity, basket_amount, borrower_count, funded_amount, loans.id AS id, 
+SELECT activity, basket_amount, borrower_count, funded_amount, image_id, image_template_id, loans.id AS id, 
 loan_amount, countries.country AS country, countries.country_code AS country_code, towns.town AS town, 
 name, partner_id, planned_expiration_date, posted_date, sector, status, use_text AS 'use'
 FROM loans 
 INNER JOIN countries on (loans.country_id = countries.id)
 INNER JOIN towns on (loans.town_id = towns.id)
 ORDER BY posted_date DESC;
+
+//view of languages
+CREATE VIEW languageView AS
+SELECT loanLanguages.loan_id, language FROM languages
+INNER JOIN loanLanguages on (loanLanguages.language_id = languages.id);

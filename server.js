@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
 
-app.get('/myapi/', function(req, res) {
+app.get('/myapi', function(req, res) {
   databaseManager.queryLoans(function(rows) {
   	res.send(JSON.stringify(rows));
   });
