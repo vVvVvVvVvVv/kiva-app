@@ -5,9 +5,10 @@ $(document).ready(function(){
 	$.get("http://api.kivaws.org/v1/loans/newest.json", function(data){
 		loans = data.loans;
 		console.log(loans);
-
+//imageIdToImage(loan.image.id),
 		$.each(loans, function(i, loan) {
           loanInfo.push([
+          	imageIdToImage(loan.image.id),
           	loan.name,
           	loan.activity,
           	loan.sector,
@@ -27,6 +28,7 @@ $(document).ready(function(){
       	$('#loans-table').dataTable({
 	        "aaData": loanInfo,
 	        "aoColumns": [
+	          { "sTitle": ""},
 	          { "sTitle": "Name"},
 	          { "sTitle": "Activity"},
 	          { "sTitle": "Sector"},
@@ -58,6 +60,15 @@ $(document).ready(function(){
 		);
 	});
 });
+
+function imageIdToImage(id) {
+	try {
+		return "<img src='http://www.kiva.org/img/80x80/" + id + ".jpg'>";
+	}
+	catch(error) {
+		return "";
+	}
+}
 
 function locationToString(location) {
 	try {
