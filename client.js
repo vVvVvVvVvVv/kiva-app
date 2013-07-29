@@ -1,11 +1,12 @@
-//start off just grabbing newest loans and logging them
 $(document).ready(function(){
 	var loanInfo = [];
+	var loans = [];
 
 	$.get("http://api.kivaws.org/v1/loans/newest.json", function(data){
-		console.log(data.loans);
+		loans = data.loans;
+		console.log(loans);
 
-		$.each(data.loans, function(i, loan) {
+		$.each(loans, function(i, loan) {
           loanInfo.push([
           	loan.name,
           	loan.activity,
@@ -44,6 +45,17 @@ $(document).ready(function(){
 		    "bJQueryUI": true,
 		    "sPaginationType": "full_numbers",
 	     }, "json");
+	});
+
+	$('#save').click(function(){
+		console.log(loans[0]);
+
+		$.ajax({
+		    url: '/save/', 
+		    type: 'POST', 
+		    contentType: 'application/json', 
+		    data: JSON.stringify(loans)}
+		);
 	});
 });
 

@@ -86,3 +86,26 @@ id INT NOT NULL AUTO_INCREMENT,
 language VARCHAR(2),
 PRIMARY KEY (id)
 );
+
+//Simplified loans schema to make stubbing the api easier
+CREATE TABLE loans
+(
+id INT NOT NULL,
+activity VARCHAR(255),
+basket_amount INT,
+borrower_count INT,
+funded_amount INT,
+loan_amount INT,
+name VARCHAR(255),
+partner_id INT,
+planned_expiration_date DATETIME,
+posted_date DATETIME,
+sector VARCHAR(255),
+status VARCHAR(255),
+use_text VARCHAR(255),
+country_id INT,
+town_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (country_id) REFERENCES countries(id),
+FOREIGN KEY (town_id) REFERENCES towns(id)
+);
