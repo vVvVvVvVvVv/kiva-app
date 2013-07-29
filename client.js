@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$.get("http://api.kivaws.org/v1/loans/newest.json", function(data){
 		loans = data.loans;
 		console.log(loans);
-//imageIdToImage(loan.image.id),
+		
 		$.each(loans, function(i, loan) {
           loanInfo.push([
           	imageIdToImage(loan.image.id),
@@ -50,7 +50,7 @@ $(document).ready(function(){
 	});
 
 	$('#save').click(function(){
-		console.log(loans[0]);
+		console.log("Saved loans to DB");
 
 		$.ajax({
 		    url: '/save/', 
@@ -87,3 +87,5 @@ function descriptionToString(description) {
 		return "";
 	}
 }
+
+window.alert = function(){return null;}; // disable alerts

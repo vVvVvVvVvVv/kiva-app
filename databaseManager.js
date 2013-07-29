@@ -1,4 +1,4 @@
-var String = require('./sprintf.min.js');
+var String = require('./scripts/sprintf.min.js');
 
 //SQL strings
 var InsertCountriesSQL = "INSERT INTO countries (country, country_code) VALUES ('%s','%s');";

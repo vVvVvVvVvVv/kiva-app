@@ -5,7 +5,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="/client.js"></script>
   
   <link rel="stylesheet" href="/css/index.css"></link>
@@ -15,15 +15,20 @@
  </head>
 <body>
 	<div class="container">
-		<img src='http://www.kiva.org/img/100x100/1.jpg'>
-		<h2>Api Example App</h2>
-		<br>
-		<div>
-			<button id="save" type="botton">Save to Local MySQL Database</button>
+		<div class="right">
+			<a href="/myapi" >My Api</a>
+		</div>
+		<div class="heading">
+			<img src='http://www.kiva.org/img/100x100/1.jpg' >
+			<h2 >An Example App Using Kiva's API</h2 >
 		</div>
 		<br>
 		<div>
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="loans-table"></table>
+		</div>
+		<br>
+		<div class="right">
+			<button id="save" type="button" >Save to Local MySQL Database</button>
 		</div>
 	</div>
 </body>
