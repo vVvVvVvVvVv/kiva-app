@@ -1,52 +1,10 @@
 $(document).ready(function(){
-	var loanInfo = [];
 	var loans = [];
 
 	$.get("http://api.kivaws.org/v1/loans/newest.json", function(data){
 		loans = data.loans;
 		console.log(loans);
-		
-		$.each(loans, function(i, loan) {
-          loanInfo.push([
-          	imageIdToImage(loan.image.id),
-          	loan.name,
-          	loan.activity,
-          	loan.sector,
-          	locationToString(loan.location),
-          	loan.status,
-          	loan.loan_amount,
-          	loan.funded_amount,
-          	loan.basket_amount,
-          	loan.borrower_count,
-          	descriptionToString(loan.description),
-          	loan.partner_id,
-          	loan.planned_expiration_date,
-          	loan.posted_date,
-          	loan.use]);
-      	});
-
-      	$('#loans-table').dataTable({
-	        "aaData": loanInfo,
-	        "aoColumns": [
-	          { "sTitle": ""},
-	          { "sTitle": "Name"},
-	          { "sTitle": "Activity"},
-	          { "sTitle": "Sector"},
-	          { "sTitle": "Location"},
-	          { "sTitle": "Status"},
-	          { "sTitle": "Loan Amount"},
-	          { "sTitle": "Funded Amount"},
-	          { "sTitle": "Basket Amount"},
-	          { "sTitle": "Borrower Count"},
-	          { "sTitle": "Description"},
-	          { "sTitle": "Partner Id"},
-	          { "sTitle": "Expiration Date"},
-	          { "sTitle": "Posted Date"},
-	          { "sTitle": "Use"},
-		    ],
-		    "bJQueryUI": true,
-		    "sPaginationType": "full_numbers",
-	     }, "json");
+		setupLoansTable(loans);
 	});
 
 	$('#save').click(function(){
@@ -56,14 +14,91 @@ $(document).ready(function(){
 		    url: '/save/', 
 		    type: 'POST', 
 		    contentType: 'application/json', 
-		    data: JSON.stringify(loans)}
-		);
+		    data: JSON.stringify(loans)
+		});
 	});
 });
 
+function setupLoansTable(loans){
+	var loanInfo = [];
+
+	//Extract the loan information we want to display
+	$.each(loans, function(i, loan) {
+      loanInfo.push([
+      	imageIdToImage(loan.image.id),
+      	loan.name,
+      	loan.activity,
+      	loan.sector,
+      	locationToString(loan.location),
+      	loan.loan_amount,
+      	loan.funded_amount,
+      	loan.borrower_count,
+      	loan.use]);
+  	});
+
+	//Create data table and add data
+  	$('#loans-table').dataTable({
+        "aaData": loanInfo,
+        "aoColumns": [
+          { "sTitle": ""},
+          { "sTitle": "Name"},
+          { "sTitle": "Activity"},
+          { "sTitle": "Sector"},
+          { "sTitle": "Location"},
+          { "sTitle": "Loan Amount"},
+          { "sTitle": "Funded Amount"},
+          { "sTitle": "Borrower Count"},
+          { "sTitle": "Use"},
+	    ],
+	    "bJQueryUI": true,
+	    "sPaginationType": "full_numbers",
+	    "bAutoWidth": false
+     }, "json");
+
+  	//add the array index to each table row so we can reference the loan table later (hacky)
+    var row = 0;
+    $('#loans-table tbody tr').each( function() {     
+        this.setAttribute('row', row);
+        $(this).css('cursor', 'pointer');
+        row++;
+    });
+
+    //set up loan-view
+    var width = $(window).width() * 0.80;
+	var height = $(window).height() * 0.80;
+	$("#loan-view").dialog({
+		autoOpen: false,
+	    modal: true,
+	    height: height,
+	    width: width
+	  });
+
+    // Add click event
+	$('#loans-table tbody tr').click(function () {
+		var row = this.getAttribute('row');
+		console.log("Click: " + row);
+		var loan = loans[row];
+		console.log(loan);
+		var html = compileHtml(loan, width, height);
+		$("#loan-view").html(html).dialog("open");
+	});
+}
+
+//Using handlebars for templating
+function compileHtml(loan, width, height){
+	var source   = $("#loan-template").html();
+	var template = Handlebars.compile(source);
+	var context = loan;
+	context.location_text = locationToString(loan.location);
+	context.description_text = descriptionToString(loan.description)
+	context.imgwidth = Math.round(width * 0.45);
+	context.imgheight = Math.round(height * 0.95);
+	return template(context);
+}
+
 function imageIdToImage(id) {
 	try {
-		return "<img src='http://www.kiva.org/img/80x80/" + id + ".jpg'>";
+		return "<img src='http://www.kiva.org/img/80x80/" + id + ".jpg'>";	
 	}
 	catch(error) {
 		return "";
@@ -88,4 +123,6 @@ function descriptionToString(description) {
 	}
 }
 
+
 window.alert = function(){return null;}; // disable alerts
+

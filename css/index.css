@@ -6,9 +6,33 @@
 }
 
 .heading {
-	text-align: center;
+	text-align: left;
 }
 
 .right {
 	text-align: right;
+	float: right;
+}
+
+.halfsection {
+	width: 50%; 
+	float: left;
+}
+
+.center {
+	text-align: center;
+}
+
+.description-title {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.description {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.odd {
+	background-color: red;
 }

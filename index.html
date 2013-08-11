@@ -3,8 +3,9 @@
 <head>
   <title>Kiva app</title>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
   <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="/client.js"></script>
   
@@ -12,6 +13,7 @@
   <link rel="stylesheet" href="/css/jquery-ui-1.10.3.custom.min.css"></link>
   <link rel="stylesheet" href="/css/site_jui.css"></link>
   <link rel="stylesheet" href="/css/demo_table_jui.css"></link>
+  
  </head>
 <body>
 	<div class="container">
@@ -19,8 +21,7 @@
 			<a href="/myapi" >My Api</a>
 		</div>
 		<div class="heading">
-			<img src='http://www.kiva.org/img/100x100/1.jpg' >
-			<h2 >An Example App Using Kiva's API</h2 >
+			<img src='http://www.kiva.org/img/200x200/1.jpg' >
 		</div>
 		<br>
 		<div>
@@ -31,4 +32,66 @@
 			<button id="save" type="button" >Save to Local MySQL Database</button>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div id="loan-view" title="Up Close And Personal"></div>
 </body>
+
+<!-- Templates -->
+<script id="loan-template" type="text/x-handlebars-template">
+	<section class="halfsection">
+	    <div class="container">
+	    	<img src='http://www.kiva.org/img/{{imgwidth}}x{{imgheight}}/{{image.id}}.jpg'>
+	    </div>
+	</section>
+	<section class="halfsection">
+		<div>
+			<p class="description-title">Activity: <span class="description"> {{activity}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Basket Amount: <span class="description"> {{basket_amount}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Borrower Count: <span class="description"> {{borrower_count}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Description: <span class="description"> {{description_text}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Funded Amount: <span class="description"> {{funded_amount}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Id: <span class="description"> {{id}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Loan Amount: <span class="description"> {{loan_amount}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Location: <span class="description"> {{location_text}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Name: <span class="description"> {{name}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Partner Id: <span class="description"> {{partner_id}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Percentage: <span class="description"> {{percentage}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Planned Expiration Date: <span class="description"> {{planned_expiration_date}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Posted Date: <span class="description"> {{posted_date}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Sector: <span class="description"> {{sector}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Status: <span class="description"> {{status}}</span></p>
+		</div>
+		<div>
+			<p class="description-title">Use: <span class="description"> {{use}}</span></p>
+		</div>
+	</section>
+</script>
