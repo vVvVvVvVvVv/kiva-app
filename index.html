@@ -3,16 +3,16 @@
 <head>
   <title>Kiva app</title>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
   <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="/client.js"></script>
   
-  <link rel="stylesheet" href="/css/index.css"></link>
   <link rel="stylesheet" href="/css/jquery-ui-1.10.3.custom.min.css"></link>
   <link rel="stylesheet" href="/css/site_jui.css"></link>
   <link rel="stylesheet" href="/css/demo_table_jui.css"></link>
+  <link rel="stylesheet" href="/css/index.css"></link>
   
  </head>
 <body>
@@ -56,11 +56,13 @@
 			Location: <span class="description"> {{location_text}}</span><br>
 			Name: <span class="description"> {{name}}</span><br>
 			Partner Id: <span class="description"> {{partner_id}}</span><br>
+			Percentage Complete: <span class="description"> {{percentage}}%</span><br>
 			Planned Expiration Date: <span class="description"> {{planned_expiration_date}}</span><br>
 			Posted Date: <span class="description"> {{posted_date}}</span><br>
 			Sector: <span class="description"> {{sector}}</span><br>
 			Status: <span class="description"> {{status}}</span><br>
 			Use: <span class="description"> {{use}}</span><br>
+			<a href="http://www.kiva.org/lend/{{id}}" id="kiva-link">Check out this loan!</a>
 		</div>
 	</section>
 </script>

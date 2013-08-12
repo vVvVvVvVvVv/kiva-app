@@ -1,9 +1,8 @@
 $(document).ready(function(){
 	var loans = [];
-
+	
 	$.get("http://api.kivaws.org/v1/loans/newest.json", function(data){
 		loans = data.loans;
-		console.log(loans);
 		setupLoansTable(loans);
 	});
 
@@ -21,11 +20,18 @@ $(document).ready(function(){
 
 function setupLoansTable(loans){
 	var loanInfo = [];
+	var loanDictionary = [];
+	
+	//populate loan dictionary with loan id as the key
+	$.each(loans, function(i, loan){
+			loanDictionary[loan.id] = loan;
+		});
 
 	//Extract the loan information we want to display
 	$.each(loans, function(i, loan) {
       loanInfo.push([
       	imageIdToImage(loan.image.id),
+      	loan.id,
       	loan.name,
       	loan.activity,
       	loan.sector,
@@ -37,10 +43,11 @@ function setupLoansTable(loans){
   	});
 
 	//Create data table and add data
-  	$('#loans-table').dataTable({
+  	var dataTable = $('#loans-table').dataTable({
         "aaData": loanInfo,
         "aoColumns": [
           { "sTitle": ""},
+          { "sTitle": "Id"},
           { "sTitle": "Name"},
           { "sTitle": "Activity"},
           { "sTitle": "Sector"},
@@ -55,14 +62,6 @@ function setupLoansTable(loans){
 	    "bAutoWidth": false
      }, "json");
 
-  	//add the array index to each table row so we can reference the loan table later (hacky)
-    var row = 0;
-    $('#loans-table tbody tr').each( function() {     
-        this.setAttribute('row', row);
-        $(this).css('cursor', 'pointer');
-        row++;
-    });
-
     //set up loan-view
     var width = $(window).width() * 0.80;
 	var height = $(window).height() * 0.80;
@@ -73,15 +72,19 @@ function setupLoansTable(loans){
 	    width: width
 	  });
 
-    // Add click event
-	$('#loans-table tbody tr').click(function () {
-		var row = this.getAttribute('row');
-		console.log("Click: " + row);
-		var loan = loans[row];
-		console.log(loan);
+    //To get table row event binding to work, datatables suggests using the live function
+    //Unfortunately jquery 1.9 deprecated 'live' for 'on' and datatables has yet to update
+    //their functions (planned for datatables 1.10). While I wait for them, using jquery 1.8
+	$('#loans-table tbody tr').live('click', function () {
+		var tRow = $('td', this);
+		var id = $(tRow[1]).text();
+		var loan = loanDictionary[id];
 		var html = compileHtml(loan, width, height);
 		$("#loan-view").html(html).dialog("open");
 	});
+
+	//Make rows look clickable
+  	dataTable.$('tr').css('cursor', 'pointer');
 }
 
 //Using handlebars for templating
@@ -93,6 +96,7 @@ function compileHtml(loan, width, height){
 	context.description_text = descriptionToString(loan.description)
 	context.imgwidth = Math.round(width * 0.45);
 	context.imgheight = Math.round(height * 0.95);
+	context.percentage = Math.round(loan.funded_amount * 100 / loan.loan_amount);
 	return template(context);
 }
 
@@ -122,7 +126,6 @@ function descriptionToString(description) {
 		return "";
 	}
 }
-
 
 window.alert = function(){return null;}; // disable alerts
 

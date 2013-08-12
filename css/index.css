@@ -33,6 +33,7 @@
 	font-weight: normal;
 }
 
-.odd {
-	background-color: red;
+#kiva-link {
+	color: #3f853f;
+	font-weight: normal;
 }
