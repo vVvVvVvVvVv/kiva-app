@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/'));
 app.use(express.bodyParser());
 app.use(app.router);
 
-var databaseManager = require('./databaseManager');
+var databaseManager = require('./dbManager');
 
 //routing
 app.get('/', function(req, res) {
@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/myapi', function(req, res) {
-  databaseManager.queryLoans(function(rows) {
+  databaseManager.queryLoans(20, function(rows) {
   	res.send(JSON.stringify(rows));
   });
 });

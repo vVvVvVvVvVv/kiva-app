@@ -1,3 +1,5 @@
+#This was my initial way of splitting up tables, but didn't end up doing it this way when I build my app
+
 CREATE TABLE loans
 (
 id INT NOT NULL,

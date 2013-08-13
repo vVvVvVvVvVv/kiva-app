@@ -1,3 +1,5 @@
+#No longer using these, please see create.sql for VIEWs and dbManager.js for queries
+
 //Create a view that joins all the tables we want
 CREATE VIEW loanInfo AS
 SELECT activities.activity AS activity, basket_amount, borrower_count, funded_amount, loans.id AS id, 

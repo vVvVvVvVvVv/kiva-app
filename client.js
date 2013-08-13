@@ -94,7 +94,7 @@ function compileHtml(loan, width, height){
 	var context = loan;
 	context.location_text = locationToString(loan.location);
 	context.description_text = descriptionToString(loan.description)
-	context.imgwidth = Math.round(width * 0.45);
+	context.imgwidth = Math.round(width * 0.40);
 	context.imgheight = Math.round(height * 0.95);
 	context.percentage = Math.round(loan.funded_amount * 100 / loan.loan_amount);
 	return template(context);
