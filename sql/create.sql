@@ -36,6 +36,12 @@ FOREIGN KEY (country_id) REFERENCES countries(id),
 FOREIGN KEY (town_id) REFERENCES towns(id)
 );
 
+CREATE TABLE languages (
+id INT NOT NULL AUTO_INCREMENT,
+language VARCHAR(255),
+PRIMARY KEY (id)
+);
+
 #Since there can be many langauges for one loan we need a seperate table to hold that info
 CREATE TABLE loanLanguages (
 loan_id INT,
@@ -43,12 +49,6 @@ language_id INT,
 PRIMARY KEY (loan_id, language_id),
 FOREIGN KEY (loan_id) REFERENCES loans(id),
 FOREIGN KEY (language_id) REFERENCES languages(id)
-);
-
-CREATE TABLE languages (
-id INT NOT NULL AUTO_INCREMENT,
-language VARCHAR(255),
-PRIMARY KEY (id)
 );
 
 #Views
